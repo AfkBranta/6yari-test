@@ -26,7 +26,7 @@ backBtn.onclick = () => {
 
 async function fetchAlbums(endpoint) {
     trackContainer.innerHTML = '<p>Loading...</p>';
-    const res = await fetch(`http://localhost:3000/api/${endpoint}`);
+    const res = await fetch(`/api/${endpoint}`);
     albumsData = await res.json();
     renderMainView(albumsData);
 }
@@ -58,7 +58,7 @@ function renderSingle(album) {
         <div class="button-row">
             <a class="btn" href="${track.spotify_url}" target="_blank">Open on Spotify</a>
             <a class="btn" href="https://genius.com/search?q=${encodeURIComponent(`${track.name} ${track.artists}`)}" target="_blank">Lyrics</a>
-            <a class="btn secondary" href="http://localhost:3000/api/download-cover?url=${encodeURIComponent(album.artwork)}"> Download Cover</a>
+            <a class="btn secondary" href="/api/download-cover?url=${encodeURIComponent(album.artwork)}"> Download Cover</a>
         </div>
     `;
     trackContainer.appendChild(div);
@@ -155,6 +155,7 @@ releasedBtn.onclick = () => fetchAlbums('bunii');
 unreleasedBtn.onclick = () => fetchAlbums('shy');
 allBtn.onclick = () => fetchAlbums('all');
 document.getElementById('leaksBtn').onclick = loadLeaks;
+
 
 
 fetchAlbums('bunii');
