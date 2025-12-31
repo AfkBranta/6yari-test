@@ -1,0 +1,28 @@
+[
+  {
+    "title": "music #18 instrumental",
+    "artist": "bunii",
+    "releaseDate": "2024",
+    "cover": "/unreleased-covers/music18.png",
+    "audio": "/unreleased-audio/music18.mp3",
+    "source": "discord.gg/6yari"
+  },
+
+  {
+    "title": "unnamed",
+    "artist": "bunii",
+    "releaseDate": "2025",
+    "cover": "/unreleased-covers/placeholder.jpg",
+    "audio": "/unreleased-audio/unnamed.mp3",
+    "source": "discord.gg/6yari"
+  },
+
+  {
+    "title": "unnamed 2",
+    "artist": "bunii",
+    "releaseDate": "2025",
+    "cover": "/unreleased-covers/placeholder.jpg",
+    "audio": "/unreleased-audio/unnamed2.mp3",
+    "source": "discord.gg/6yari"
+  }
+]

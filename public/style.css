@@ -1,0 +1,146 @@
+/* ---------- GLOBAL ---------- */
+body {
+    margin: 0;
+    background: #0b0d10;
+    color: #f5f7fa;
+    font-family: Inter, system-ui, sans-serif;
+}
+
+header {
+    padding: 2rem 1.5rem 1rem;
+    text-align: center;
+}
+
+h1 {
+    margin: 0 0 1rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+}
+
+/* ---------- CONTROLS ---------- */
+#controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.controls button {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.controls button:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+/* ---------- GRID ---------- */
+main {
+    padding: 1.5rem;
+}
+
+#tracks {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+}
+
+/* ---------- CARDS ---------- */
+.track {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 1rem;
+    transition: transform 0.15s ease, border 0.15s ease;
+}
+
+.track:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.18);
+}
+
+.track img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+}
+
+.track h3 {
+    font-size: 0.95rem;
+    margin: 0.25rem 0;
+}
+
+.sub {
+    font-size: 0.75rem;
+    opacity: 0.65;
+}
+
+/* ---------- BUTTONS ---------- */
+.button-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 0.45rem 0.7rem;
+    font-size: 0.7rem;
+    text-decoration: none;
+    color: #ffffff;
+    border-radius: 999px;
+    border: 1px solid #6b9cff;
+    background: rgba(107,156,255,0.18);
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.btn:hover {
+    background: rgba(107,156,255,0.35);
+    transform: translateY(-1px);
+}
+
+.btn.secondary {
+    border-color: #9aa4b2;
+    background: rgba(154,164,178,0.15);
+}
+
+/* ---------- BACK BUTTON ---------- */
+.back-wrapper {
+    margin-bottom: 16px;
+}
+
+button.back-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  font-weight: 600;
+  text-align: center;
+  border: 2px solid #4a90e2;
+  background-color: rgba(74, 144, 226, 0.1);
+  color: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button.back-btn:hover {
+  background-color: rgba(74, 144, 226, 0.3);
+  border-color: #4a90e2;
+}
+
+/* ---------- AUDIO ---------- */
+audio {
+    width: 100%;
+    margin-top: 0.5rem;
+}
