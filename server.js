@@ -163,14 +163,19 @@ app.get('/api/shy', async (req, res) => {
 });
 
 app.get('/api/all', async (req, res) => {
-    const tracks = await getCachedTracks('all', async () => {
-        const [bunii, shy] = await Promise.all([
-            fetchArtistTracks('6mx3Y8XNLPaS2pjJbQFq3W'),
-            fetchArtistTracks('6sZWADsYSJKpvXQMek1Cwl')
-        ]);
-        return [...bunii, ...shy];
-    });
-    res.json(tracks);
+    try {
+        const tracks = await getCachedTracks('all', async () => {
+            const [bunii, shy] = await Promise.all([
+                fetchArtistTracks('6mx3Y8XNLPaS2pjJbQFq3W'),
+                fetchArtistTracks('6sZWADsYSJKpvXQMek1Cwl')
+            ]);
+            return [...(bunii || []), ...(shy || [])];
+        });
+        res.json(tracks);
+    } catch (err) {
+        console.error('Error fetching /api/all:', err);
+        res.status(500).json([]);
+    }
 });
 
 // Serve index.html
@@ -180,4 +185,5 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
+
 });
