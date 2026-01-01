@@ -2,20 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>6yari</title>
+    <title>I love 6yari</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- I Love 6yari -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
+    <!-- Favicons for some fucking reason. idk why this works-->
+    <link rel="icon" type="image/png" href="/favi/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favi/favicon.svg" />
+    <link rel="shortcut icon" href="/favi/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favi/apple-touch-icon.png" />
+    <link rel="manifest" href="/favi/site.webmanifest" />
+
+    <!-- TODO: make this actually work idk idc -->
+    <!-- Discord / Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="6yari">
+    <meta property="og:title" content="6yari">
+    <meta property="og:description" content="Archive of released, unreleased, and leaked 6yari music">
+    <meta property="og:url" content="https://6yari.org">
+    <meta property="og:image" content="https://6yari.org/embed.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="6yari">
+    <meta name="twitter:description" content="Archive of released, unreleased, and leaked 6yari music">
+    <meta name="twitter:image" content="https://6yari.org/embed.png">
+
+    <!-- embed side bar -->
+    <meta name="theme-color" content="#43B581">
+
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-
     <header>
-        <h1>6yari.org</h1>
+        <img src="favi/favicon-96x96.png" alt="6yari Logo" class="logo">
+        <h1 class="site-title"><span>6yari.org</span></h1>
         <div class="controls">
             <button id="backBtn" class="back-btn" style="display:none;">← Back</button>
             <button id="allBtn">All</button>
@@ -29,7 +53,10 @@
         <div id="tracks"></div>
     </main>
 
-
     <script src="/app.js"></script>
+
+    <footer>
+        <p>For Questions / Concerns <a class="mailto" href="mailto:6yariadmin@proton.me">6yariadmin@proton.me</a>, not affiliated with Bunii or Spotify. </p>
+    </footer>
 </body>
 </html>

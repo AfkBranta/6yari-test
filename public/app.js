@@ -24,12 +24,29 @@ backBtn.onclick = () => {
   showBackButton(false);
 };
 
+function sortByReleaseDateDesc(items) {
+    return items.sort((a, b) => {
+        const dateA = new Date(a.releaseDate || 0);
+        const dateB = new Date(b.releaseDate || 0);
+        return dateB - dateA; // newest first
+    });
+}
+
 async function fetchAlbums(endpoint) {
     trackContainer.innerHTML = '<p>Loading...</p>';
-    const res = await fetch(`/api/${endpoint}`);
-    albumsData = await res.json();
-    renderMainView(albumsData);
+
+    try {
+        const res = await fetch(`/api/${endpoint}`);
+        const data = await res.json();
+
+        albumsData = sortByReleaseDateDesc(data);
+        renderMainView(albumsData);
+    } catch (err) {
+        console.error(err);
+        trackContainer.innerHTML = '<p>Failed to load data.</p>';
+    }
 }
+
 
 function renderMainView(albums) {
     trackContainer.innerHTML = '';
@@ -97,10 +114,10 @@ function renderAlbumCard(album) {
     trackContainer.appendChild(div);
 }
 function renderAlbumTracks(album) {
-  const container = document.getElementById('tracks');
-  container.innerHTML = '';
+const container = document.getElementById('tracks');
+container.innerHTML = '';
 
-  showBackButton(true);
+showBackButton(true);
 
   album.tracks.forEach((track, i) => {
     const div = document.createElement('div');
@@ -120,6 +137,71 @@ function renderAlbumTracks(album) {
   });
 }
 
+let activeAudio = null;
+
+function stopActiveAudio() {
+  if (activeAudio) {
+      activeAudio.pause();
+      activeAudio.currentTime = 0;
+
+      document.querySelectorAll('.player-btn').forEach(b => b.textContent = '▶');
+      document.querySelectorAll('.player-progress').forEach(p => p.style.width = '0%');
+      document.querySelectorAll('.player-time').forEach(t => t.textContent = '0:00');
+
+      activeAudio = null;
+  }
+}
+
+function setupPlayers() {
+    document.querySelectorAll('.player').forEach(player => {
+        const audio = new Audio(player.dataset.audio);
+        const btn = player.querySelector('.player-btn');
+        const bar = player.querySelector('.player-bar');
+        const progress = player.querySelector('.player-progress');
+        const time = player.querySelector('.player-time');
+
+        btn.onclick = () => {
+            if (activeAudio && activeAudio !== audio) {
+                activeAudio.pause();
+                document.querySelectorAll('.player-btn').forEach(b => b.textContent = '▶');
+            }
+
+            if (audio.paused) {
+                audio.play();
+                btn.textContent = '⏸';
+                activeAudio = audio;
+            } else {
+                audio.pause();
+                btn.textContent = '▶';
+            }
+        };
+
+        audio.ontimeupdate = () => {
+            if (!audio.duration) return;
+            progress.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+            time.textContent = formatTime(audio.currentTime);
+        };
+
+        audio.onended = () => {
+            btn.textContent = '▶';
+            progress.style.width = '0%';
+            time.textContent = '0:00';
+        };
+
+        bar.onclick = e => {
+            const rect = bar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = percent * audio.duration;
+        };
+    });
+}
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60).toString().padStart(2, '0');
+  return `${m}:${s}`;
+}
+
 async function loadLeaks() {
   const container = document.getElementById('tracks');
   container.innerHTML = '<p>Loading leaks...</p>';
@@ -137,25 +219,54 @@ async function loadLeaks() {
         <img src="${leak.cover}" alt="${leak.title} cover" />
         <h3>${leak.title}</h3>
         <p class="sub">${leak.artist} • ${leak.releaseDate}</p>
-        <audio controls>
-          <source src="${leak.audio}" type="audio/mpeg" />
-          Your browser does not support audio.
-        </audio>
+        <div class="player" data-audio="${leak.audio}">
+          <button class="player-btn">▶</button>
+          <div class="player-bar">
+            <div class="player-progress"></div>
+          </div>
+          <span class="player-time">0:00</span>
+        </div>
       `;
       container.appendChild(div);
     });
+
+    setupPlayers();
+
   } catch (err) {
     console.error('Error loading leaks:', err);
     container.innerHTML = '<p>Failed to load leaks.</p>';
   }
 }
 
-
 releasedBtn.onclick = () => fetchAlbums('bunii');
 unreleasedBtn.onclick = () => fetchAlbums('shy');
 allBtn.onclick = () => fetchAlbums('all');
 document.getElementById('leaksBtn').onclick = loadLeaks;
 
+releasedBtn.onclick = () => {
+    stopActiveAudio();
+    fetchAlbums('bunii');
+};
 
+unreleasedBtn.onclick = () => {
+    stopActiveAudio();
+    fetchAlbums('shy');
+};
+
+allBtn.onclick = () => {
+    stopActiveAudio();
+    fetchAlbums('all');
+};
+
+document.getElementById('leaksBtn').onclick = () => {
+    stopActiveAudio();
+    loadLeaks();
+};
+
+backBtn.onclick = () => {
+    stopActiveAudio();
+    renderMainView(albumsData);
+    showBackButton(false);
+};
 
 fetchAlbums('bunii');

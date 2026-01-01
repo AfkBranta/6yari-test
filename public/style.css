@@ -17,6 +17,47 @@ h1 {
     font-weight: 600;
 }
 
+footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+    margin: 1.5rem 0;
+}
+
+/* ---------- funky title shit, remove later ---------- */
+.site-title span {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 2.5rem;
+
+  background: linear-gradient(
+    270deg,
+    #6b9cff,
+    #4a90e2,
+    #6b9cff,
+    #8bb8ff
+  );
+  background-size: 400% 400%;
+  
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  animation: gradientMove 6s ease infinite, wobble 3s ease-in-out infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25% { transform: rotate(1deg) translateY(-2px); }
+  50% { transform: rotate(-1deg) translateY(2px); }
+  75% { transform: rotate(1deg) translateY(-1px); }
+}
+
 /* ---------- CONTROLS ---------- */
 #controls {
   display: flex;
@@ -58,6 +99,10 @@ main {
 }
 
 /* ---------- CARDS ---------- */
+.album-card {
+    cursor: pointer;
+}
+
 .track {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.08);
@@ -139,8 +184,85 @@ button.back-btn:hover {
   border-color: #4a90e2;
 }
 
+
+/* ---------- FOOTER LINK ---------- */
+.mailto {
+    color: #6ea8ff;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(110, 168, 255, 0.4);
+    transition: color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    cursor: pointer;
+}
+
+.mailto:hover {
+    color: #9cc2ff;
+    border-bottom-color: rgba(156, 194, 255, 0.8);
+}
+
+.mailto:active {
+    opacity: 0.85;
+}
+
+.mailto:focus-visible {
+    outline: 2px solid rgba(110, 168, 255, 0.6);
+    outline-offset: 2px;
+    border-bottom-color: transparent;
+}
+
 /* ---------- AUDIO ---------- */
 audio {
     width: 100%;
     margin-top: 0.5rem;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    user-select: none;
+}
+
+.player-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid rgba(110,168,255,0.6);
+    background: rgba(110,168,255,0.12);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.player-btn:hover {
+    background: rgba(110,168,255,0.2);
+}
+
+.player-btn:active {
+    transform: scale(0.95);
+}
+
+.player-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.player-progress {
+    height: 100%;
+    width: 0%;
+    background: #6ea8ff;
+    border-radius: 999px;
+}
+
+.player-time {
+    font-size: 12px;
+    color: #9aa4b2;
+    min-width: 38px;
+    text-align: right;
 }

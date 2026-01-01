@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/api/download-cover', async (req, res) => {
     const imageUrl = req.query.url;
 
-    // Basic safety check (Spotify CDN only)
+    // Spotify CDN only
     if (!imageUrl || !imageUrl.startsWith('https://i.scdn.co/')) {
         return res.status(400).send('Invalid image URL');
     }
@@ -163,19 +163,14 @@ app.get('/api/shy', async (req, res) => {
 });
 
 app.get('/api/all', async (req, res) => {
-    try {
-        const tracks = await getCachedTracks('all', async () => {
-            const [bunii, shy] = await Promise.all([
-                fetchArtistTracks('6mx3Y8XNLPaS2pjJbQFq3W'),
-                fetchArtistTracks('6sZWADsYSJKpvXQMek1Cwl')
-            ]);
-            return [...(bunii || []), ...(shy || [])];
-        });
-        res.json(tracks);
-    } catch (err) {
-        console.error('Error fetching /api/all:', err);
-        res.status(500).json([]);
-    }
+    const tracks = await getCachedTracks('all', async () => {
+        const [bunii, shy] = await Promise.all([
+            fetchArtistTracks('6mx3Y8XNLPaS2pjJbQFq3W'),
+            fetchArtistTracks('6sZWADsYSJKpvXQMek1Cwl')
+        ]);
+        return [...bunii, ...shy];
+    });
+    res.json(tracks);
 });
 
 // Serve index.html
@@ -183,7 +178,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// temp
 app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-
+    console.log(`Server running at port ${PORT}`);
 });
